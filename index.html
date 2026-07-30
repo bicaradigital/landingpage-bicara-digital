@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bicara Digital — Website & SaaS yang Siap Dipakai</title>
+<meta name="description" content="Studio digital solo yang membangun website, dashboard bisnis, dan produk SaaS — dikerjakan langsung oleh developernya.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange:#FF7420;
+    --orange-deep:#E85E0A;
+    --teal:#03989E;
+    --teal-deep:#02777C;
+    --ink:#1C2430;
+    --ink-muted:#5B6472;
+    --cream:#FFF9F2;
+    --white:#FFFFFF;
+    --red:#E23B3B;
+    --shadow: 6px 6px 0 var(--ink);
+    --shadow-sm: 4px 4px 0 var(--ink);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Space Grotesk', sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  img{max-width:100%; display:block;}
+  a{color:inherit;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  .mono{font-family:'Space Mono', monospace;}
+  .display{font-family:'Archivo Black', sans-serif; text-transform:uppercase; line-height:1.08; letter-spacing:-0.5px;}
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'Space Grotesk', sans-serif; font-weight:700;
+    font-size:16px; text-transform:uppercase; letter-spacing:0.3px;
+    padding:16px 28px; border-radius:14px;
+    border:3px solid var(--ink);
+    box-shadow:var(--shadow-sm);
+    cursor:pointer; text-decoration:none;
+    transition:transform .12s ease, box-shadow .12s ease;
+    white-space:nowrap;
+  }
+  .btn:hover{ transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--ink); }
+  .btn:active{ transform:translate(1px,1px); box-shadow:2px 2px 0 var(--ink); }
+  .btn-primary{ background:var(--orange); color:var(--white); }
+  .btn-ghost{ background:var(--white); color:var(--ink); }
+  .btn-sm{ padding:11px 18px; font-size:14px; border-radius:10px; }
+
+  /* ---------- Nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,249,242,0.92); backdrop-filter:blur(6px);
+    border-bottom:3px solid var(--ink);
+  }
+  nav{ display:flex; align-items:center; justify-content:space-between; padding:16px 32px; max-width:1180px; margin:0 auto; }
+  .brand{ display:flex; align-items:center; gap:10px; font-weight:700; font-size:19px;}
+  .brand img{ height:38px; width:auto; }
+  .nav-links{ display:flex; gap:34px; font-weight:600; font-size:15px; list-style:none;}
+  .nav-links a{ text-decoration:none; position:relative; padding-bottom:4px;}
+  .nav-links a:hover{ color:var(--orange); }
+  .nav-right{ display:flex; align-items:center; gap:18px; }
+  .nav-status{ font-family:'Space Mono',monospace; font-size:12.5px; color:var(--ink-muted); text-align:right; line-height:1.35;}
+  .nav-status b{ color:var(--ink); }
+  .nav-status .dot{ display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--teal); margin-right:6px;}
+  .burger{ display:none; }
+
+  @media(max-width:900px){
+    .nav-links{ display:none; }
+    .nav-status{ display:none; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{ padding:64px 0 40px; }
+  .hero-grid{ display:flex; gap:60px; align-items:center; }
+  .hero-left{ flex:1 1 520px; min-width:300px; }
+  .hero-right{ flex:1 1 420px; min-width:300px; position:relative; }
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--orange); color:var(--white); font-weight:700;
+    font-size:13px; letter-spacing:0.6px; text-transform:uppercase;
+    padding:9px 18px; border-radius:999px; border:3px solid var(--ink);
+    box-shadow:var(--shadow-sm); margin-bottom:26px;
+  }
+  h1.display{ font-size:52px; margin-bottom:22px; }
+  h1.display .hl{ color:var(--teal); }
+  .hero-sub{ font-size:18px; color:var(--ink-muted); max-width:520px; margin-bottom:30px; }
+
+  .check-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px 24px; margin-bottom:36px; }
+  .check-item{ display:flex; align-items:flex-start; gap:10px; font-size:15.5px; font-weight:600; }
+  .check-item .tick{
+    flex:none; width:22px; height:22px; border-radius:6px; background:var(--orange);
+    border:2px solid var(--ink); color:#fff; font-size:13px; font-weight:700;
+    display:flex; align-items:center; justify-content:center; margin-top:1px;
+  }
+  .hero-ctas{ display:flex; gap:16px; flex-wrap:wrap; }
+
+  /* hero visual */
+  .browser-card{
+    background:var(--white); border:3px solid var(--ink); border-radius:20px;
+    box-shadow:9px 9px 0 var(--ink); overflow:hidden;
+  }
+  .browser-bar{ background:var(--ink); padding:14px 18px; display:flex; align-items:center; gap:8px; }
+  .browser-bar span{ width:11px; height:11px; border-radius:50%; display:inline-block; }
+  .browser-bar span:nth-child(1){ background:#FF6259; }
+  .browser-bar span:nth-child(2){ background:#FFBD2E; }
+  .browser-bar span:nth-child(3){ background:#28C93F; }
+  .browser-url{
+    margin-left:10px; background:#2E3A4E; color:#B7C2D6; font-family:'Space Mono',monospace;
+    font-size:12.5px; padding:5px 12px; border-radius:6px; flex:1;
+  }
+  .browser-body{ padding:26px; }
+  .code-line{ font-family:'Space Mono',monospace; font-size:14.5px; margin-bottom:14px; display:flex; align-items:center; gap:10px;}
+  .code-line .dollar{ color:var(--orange); font-weight:700; }
+  .code-line .ok{ margin-left:auto; color:var(--teal-deep); font-weight:700; }
+  .code-line .bar{ display:inline-flex; gap:3px; }
+  .code-line .bar i{ width:4px; background:var(--teal); border-radius:2px; display:inline-block; }
+
+  .sticker{
+    position:absolute; background:var(--white); border:3px solid var(--ink); border-radius:14px;
+    box-shadow:5px 5px 0 var(--ink); padding:10px 16px; font-weight:700; font-size:14px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .sticker.s1{ top:-22px; left:-30px; transform:rotate(-6deg); background:var(--orange); color:#fff;}
+  .sticker.s2{ bottom:30px; right:-38px; transform:rotate(5deg); }
+  .sticker.s3{ top:46%; right:-46px; transform:rotate(-4deg); background:var(--teal); color:#fff;}
+  .sticker.s4{ bottom:-24px; left:26px; transform:rotate(4deg); }
+
+  @media(max-width:1050px){
+    .sticker{ display:none; }
+    h1.display{ font-size:42px; }
+  }
+  @media(max-width:600px){
+    h1.display{ font-size:34px; }
+    .check-grid{ grid-template-columns:1fr; }
+    .wrap{ padding:0 20px; }
+  }
+
+  /* ---------- Trust bar ---------- */
+  .trust{ padding:36px 0; border-top:3px solid var(--ink); border-bottom:3px solid var(--ink); background:var(--white); }
+  .trust-inner{ display:flex; align-items:center; gap:22px; flex-wrap:wrap; justify-content:center; }
+  .trust-label{ font-family:'Space Mono',monospace; font-size:13px; color:var(--ink-muted); text-transform:uppercase; letter-spacing:1px; }
+  .chip{
+    background:var(--cream); border:2px solid var(--ink); border-radius:999px; padding:8px 18px;
+    font-weight:700; font-size:14.5px;
+  }
+
+  /* ---------- Statement ---------- */
+  .statement{ padding:96px 0 70px; text-align:center; }
+  .statement h2{ font-size:38px; max-width:900px; margin:0 auto; }
+  .statement mark{ background:var(--orange); color:var(--white); padding:2px 10px; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+  @media(max-width:700px){ .statement h2{ font-size:26px; } }
+
+  /* ---------- Compare ---------- */
+  .compare{ padding:0 0 100px; }
+  .compare-grid{ display:flex; gap:28px; flex-wrap:wrap; }
+  .compare-card{ flex:1 1 380px; border-radius:20px; padding:32px; border:3px solid var(--ink); }
+  .compare-card.bad{ background:var(--white); }
+  .compare-card.good{ background:#FFF3E8; box-shadow:var(--shadow); }
+  .compare-title{ font-weight:700; font-size:20px; margin-bottom:20px; display:flex; align-items:center; gap:10px; }
+  .compare-list{ list-style:none; display:flex; flex-direction:column; gap:14px; }
+  .compare-list li{ display:flex; gap:12px; font-size:15.5px; font-weight:600; align-items:flex-start; }
+  .mark-x{ color:var(--red); font-weight:800; flex:none; }
+  .mark-ok{ color:var(--teal-deep); font-weight:800; flex:none; }
+
+  /* ---------- Founder ---------- */
+  .founder{ padding:0 0 100px; }
+  .founder-inner{ display:flex; gap:56px; align-items:center; flex-wrap:wrap; }
+  .founder-photo{ flex:0 0 300px; position:relative; }
+  .founder-photo::before{
+    content:''; position:absolute; top:16px; left:16px; right:-16px; bottom:-16px;
+    background:var(--orange); border-radius:22px; z-index:0;
+  }
+  .founder-photo img{
+    position:relative; z-index:1; width:100%; aspect-ratio:4/5; object-fit:cover;
+    border-radius:22px; border:3px solid var(--ink); box-shadow:none; display:block;
+  }
+  .founder-photo .fbadge{
+    position:absolute; z-index:2; bottom:-18px; left:-18px;
+    background:var(--white); border:3px solid var(--ink); border-radius:12px;
+    box-shadow:var(--shadow-sm); padding:9px 14px; font-weight:700; font-size:13px;
+    display:flex; align-items:center; gap:7px; transform:rotate(-3deg);
+  }
+  @media(max-width:480px){ .founder-photo{ flex:0 0 240px; } }
+  .founder-text{ flex:1 1 420px; min-width:280px; }
+  .founder-quote{
+    border-left:5px solid var(--orange); padding-left:22px; font-size:24px; font-weight:700;
+    font-style:italic; margin-bottom:22px; line-height:1.4;
+  }
+  .founder-body p{ margin-bottom:14px; color:var(--ink-muted); font-size:16px; }
+  .founder-sign{ margin-top:18px; font-weight:700; font-family:'Space Mono',monospace; font-size:14.5px; }
+
+  /* ---------- Services ---------- */
+  .services{ padding:0 0 100px; }
+  .section-head{ text-align:center; max-width:640px; margin:0 auto 50px; }
+  .section-head .eyebrow{ background:var(--teal); }
+  .section-head h2.display{ font-size:36px; }
+  .services-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .services-grid .svc-card:nth-child(7){ grid-column:2; }
+  @media(max-width:900px){ .services-grid{ grid-template-columns:repeat(2,1fr);} .services-grid .svc-card:nth-child(7){ grid-column:1; } }
+  @media(max-width:600px){ .services-grid{ grid-template-columns:1fr;} .services-grid .svc-card:nth-child(7){ grid-column:1; } }
+
+  .svc-card{
+    background:var(--white); border:3px solid var(--ink); border-radius:18px; padding:26px;
+    display:flex; flex-direction:column; gap:12px; transition:transform .12s ease, box-shadow .12s ease;
+    box-shadow:var(--shadow-sm);
+  }
+  .svc-card:hover{ transform:translate(-3px,-3px); box-shadow:8px 8px 0 var(--ink); }
+  .svc-top{ display:flex; justify-content:space-between; align-items:flex-start; }
+  .svc-label{ font-family:'Space Mono',monospace; font-size:11.5px; color:var(--ink-muted); letter-spacing:1px; }
+  .svc-badge{
+    font-family:'Space Mono',monospace; font-size:11.5px; font-weight:700; background:var(--orange);
+    color:#fff; border:2px solid var(--ink); border-radius:8px; padding:4px 9px; white-space:nowrap;
+  }
+  .svc-icon{ font-size:30px; }
+  .svc-title{ font-weight:700; font-size:19px; }
+  .svc-desc{ font-size:14.5px; color:var(--ink-muted); flex:1; }
+  .svc-list{ list-style:none; display:flex; flex-direction:column; gap:6px; margin-top:4px; }
+  .svc-list li{ font-size:13.5px; font-weight:600; display:flex; gap:8px; align-items:flex-start; }
+  .svc-list .tickmini{ color:var(--teal-deep); font-weight:800; }
+
+  /* ---------- Process ---------- */
+  .process{ padding:0 0 100px; }
+  .process-strip{ display:flex; gap:0; border:3px solid var(--ink); border-radius:20px; overflow:hidden; background:var(--white); flex-wrap:wrap; }
+  .proc-step{ flex:1 1 220px; padding:28px 24px; position:relative; }
+  .proc-step:not(:last-child){ border-right:3px solid var(--ink); }
+  .proc-num{ font-family:'Archivo Black',sans-serif; font-size:30px; color:var(--orange); margin-bottom:8px; }
+  .proc-title{ font-weight:700; font-size:16px; margin-bottom:6px; }
+  .proc-desc{ font-size:13.5px; color:var(--ink-muted); }
+  @media(max-width:700px){ .proc-step:not(:last-child){ border-right:none; border-bottom:3px solid var(--ink);} }
+
+  /* ---------- FAQ ---------- */
+  .faq{ padding:0 0 100px; }
+  .faq-list{ max-width:760px; margin:0 auto; display:flex; flex-direction:column; gap:14px; }
+  details{
+    background:var(--white); border:3px solid var(--ink); border-radius:14px; padding:20px 24px;
+  }
+  summary{ font-weight:700; font-size:16.5px; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; }
+  summary::-webkit-details-marker{ display:none; }
+  summary::after{ content:'+'; font-family:'Archivo Black',sans-serif; font-size:22px; color:var(--orange); margin-left:12px; }
+  details[open] summary::after{ content:'–'; }
+  details p{ margin-top:14px; color:var(--ink-muted); font-size:15px; }
+
+  /* ---------- Final CTA ---------- */
+  .final-cta{ padding:0 0 100px; }
+  .cta-banner{
+    background:var(--ink); color:#fff; border-radius:26px; border:3px solid var(--ink);
+    box-shadow:var(--shadow); padding:64px 48px; text-align:center; position:relative; overflow:hidden;
+  }
+  .cta-banner h2.display{ font-size:38px; color:#fff; margin-bottom:16px; }
+  .cta-banner p{ color:#B7C2D6; font-size:17px; margin-bottom:30px; }
+  .cta-banner .btn-primary{ background:var(--orange); }
+  @media(max-width:600px){ .cta-banner{ padding:48px 26px; } .cta-banner h2.display{ font-size:28px; } }
+
+  /* ---------- Footer ---------- */
+  footer{ border-top:3px solid var(--ink); padding:44px 0; background:var(--white); }
+  .foot-inner{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; }
+  .foot-brand{ display:flex; align-items:center; gap:10px; font-weight:700; }
+  .foot-brand img{ height:30px; }
+  .foot-links{ display:flex; gap:26px; font-size:14px; font-weight:600; list-style:none; }
+  .foot-copy{ font-family:'Space Mono',monospace; font-size:12.5px; color:var(--ink-muted); margin-top:24px; text-align:center; }
+
+  /* WhatsApp floating button */
+  .wa-float{
+    position:fixed; bottom:26px; right:26px; z-index:60;
+    width:60px; height:60px; border-radius:50%; background:#25D366;
+    border:3px solid var(--ink); box-shadow:var(--shadow-sm);
+    display:flex; align-items:center; justify-content:center; text-decoration:none;
+  }
+  .wa-float svg{ width:28px; height:28px; }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="brand"><img src="assets/logo.png" alt="Bicara Digital logo"> bicaradigital</div>
+    <ul class="nav-links">
+      <li><a href="#layanan">Layanan</a></li>
+      <li><a href="#proses">Proses</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="nav-status"><span class="dot"></span><b>Terbuka</b> untuk proyek baru<br>Respons &lt; 24 jam</div>
+      <a href="https://wa.me/6285329997986" class="btn btn-primary btn-sm">Chat Sekarang</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero wrap">
+  <div class="hero-grid">
+    <div class="hero-left">
+      <span class="eyebrow">⚡ Studio Web &amp; SaaS Development</span>
+      <h1 class="display">Bangun Website &amp; Sistem Bisnis yang <span class="hl">Beneran Dipakai:</span></h1>
+      <p class="hero-sub">Dari landing page sampai platform SaaS — dikerjakan langsung oleh developernya, bukan tim marketing yang jual paket kosong.</p>
+      <div class="check-grid">
+        <div class="check-item"><span class="tick">✓</span>Website company profile &amp; landing page</div>
+        <div class="check-item"><span class="tick">✓</span>Dashboard &amp; sistem bisnis internal</div>
+        <div class="check-item"><span class="tick">✓</span>Produk SaaS multi-user</div>
+        <div class="check-item"><span class="tick">✓</span>Otomasi &amp; integrasi AI</div>
+        <div class="check-item"><span class="tick">✓</span>Deploy ke server/hosting</div>
+        <div class="check-item"><span class="tick">✓</span>Konsultasi &amp; estimasi gratis</div>
+      </div>
+      <div class="hero-ctas">
+        <a href="https://wa.me/6285329997986" class="btn btn-primary">Chat di WhatsApp →</a>
+        <a href="#layanan" class="btn btn-ghost">Lihat Layanan</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="browser-card">
+        <div class="browser-bar">
+          <span></span><span></span><span></span>
+          <div class="browser-url">bagoesbicaradigital.net</div>
+        </div>
+        <div class="browser-body">
+          <div class="code-line"><span class="dollar">$</span> web-development <span class="ok">● ready</span></div>
+          <div class="code-line"><span class="dollar">$</span> saas-development <span class="ok">● ready</span></div>
+          <div class="code-line"><span class="dollar">$</span> business-system <span class="ok">● ready</span></div>
+          <div class="code-line"><span class="dollar">$</span> ai-automation <span class="ok">● ready</span></div>
+        </div>
+      </div>
+      <div class="sticker s1">🚀 Deploy Ready</div>
+      <div class="sticker s2">⭐ Rating 5.0</div>
+      <div class="sticker s3">15+ Proyek</div>
+      <div class="sticker s4">👨‍💻 Dikerjakan Sendiri</div>
+    </div>
+  </div>
+</section>
+
+<section class="trust">
+  <div class="wrap trust-inner">
+    <span class="trust-label">Terbuka bekerja sama dengan:</span>
+    <span class="chip">Startup</span>
+    <span class="chip">UMKM &amp; Bisnis Swasta</span>
+    <span class="chip">Instansi Pemerintah</span>
+    <span class="chip">Bisnis Kuliner &amp; Retail</span>
+  </div>
+</section>
+
+<section class="statement wrap">
+  <h2 class="display">Sekarang bukan soal siapa yang punya tim IT besar. Tapi siapa yang punya sistem yang <mark>beneran jalan.</mark></h2>
+</section>
+
+<section class="compare wrap">
+  <div class="compare-grid">
+    <div class="compare-card bad">
+      <div class="compare-title">❌ Dulu — Serba Manual</div>
+      <ul class="compare-list">
+        <li><span class="mark-x">✗</span>Catat transaksi manual di buku atau Excel</li>
+        <li><span class="mark-x">✗</span>Invoice &amp; laporan dibuat satu-satu</li>
+        <li><span class="mark-x">✗</span>Susah dihubungi kalau ada masalah sistem</li>
+        <li><span class="mark-x">✗</span>Website "asal jadi", tidak bisa dikembangkan</li>
+      </ul>
+    </div>
+    <div class="compare-card good">
+      <div class="compare-title">✅ Sekarang — Dengan Bicara Digital</div>
+      <ul class="compare-list">
+        <li><span class="mark-ok">✓</span>Dashboard otomatis, data real-time</li>
+        <li><span class="mark-ok">✓</span>Invoice &amp; laporan digenerate otomatis</li>
+        <li><span class="mark-ok">✓</span>Komunikasi langsung dengan yang mengerjakan</li>
+        <li><span class="mark-ok">✓</span>Sistem custom yang terus bisa dikembangkan</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="founder wrap">
+  <div class="founder-inner">
+    <div class="founder-photo">
+      <img src="assets/founder.jpg" alt="Founder Bicara Digital">
+      <div class="fbadge"><img src="assets/logo_trimmed.png" alt="" style="height:16px;width:auto;">Founder Bicara Digital</div>
+    </div>
+    <div class="founder-text">
+      <p class="founder-quote">"Saya bangun setiap sistem sendiri, dari nol — biar saya tahu persis bagaimana cara kerjanya."</p>
+      <div class="founder-body">
+        <p>Sebelum jadi developer, saya bertahun-tahun kerja di lapangan — operasional dan perawatan alat berat, sampai manajemen administrasi. Sejak 2018 saya pindah jalur, belajar membangun produk digital secara otodidak.</p>
+        <p>Sekarang saya menjalankan Bicara Digital: studio digital solo yang mengerjakan web development dan SaaS untuk startup, instansi pemerintah, dan bisnis swasta — dari konsultasi awal sampai sistem itu benar-benar online.</p>
+      </div>
+      <div class="founder-sign">— Bicara Digital</div>
+    </div>
+  </div>
+</section>
+
+<section class="services wrap" id="layanan">
+  <div class="section-head">
+    <span class="eyebrow">🧰 Yang Kami Kerjakan</span>
+    <h2 class="display">Layanan Bicara Digital</h2>
+  </div>
+  <div class="services-grid">
+
+    <div class="svc-card">
+      <div class="svc-top"><span class="svc-label">LAYANAN 01</span><span class="svc-badge">Sesuai Kebutuhan</span></div>
+      <div class="svc-icon">🌐</div>
+      <div class="svc-title">Web Development</div>
+      <div class="svc-desc">Website &amp; aplikasi web modern, cepat, dan responsif — dari landing page sampai platform full-stack.</div>
+      <ul class="svc-list"><li><span class="tickmini">✓</span>Next.js, React, TypeScript</li><li><span class="tickmini">✓</span>Siap di-deploy</li></ul>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-top"><span class="svc-label">LAYANAN 02</span><span class="svc-badge">Sesuai Kebutuhan</span></div>
+      <div class="svc-icon">🚀</div>
+      <div class="svc-title">SaaS Development</div>
+      <div class="svc-desc">Produk SaaS end-to-end — dari MVP hingga platform multi-user berskala, lengkap dengan autentikasi.</div>
+      <ul class="svc-list"><li><span class="tickmini">✓</span>Supabase, PostgreSQL</li><li><span class="tickmini">✓</span>Auth &amp; ekspor data</li></ul>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-top"><span class="svc-label">LAYANAN 03</span><span class="svc-badge">Sesuai Kebutuhan</span></div>
+      <div class="svc-icon">📊</div>
+      <div class="svc-title">Business System</div>
+      <div class="svc-desc">Sistem operasional custom — keuangan, inventaris, dan pelaporan, disesuaikan alur kerja organisasi.</div>
+      <ul class="svc-list"><li><span class="tickmini">✓</span>Dashboard real-time</li><li><span class="tickmini">✓</span>Ekspor PDF/Excel</li></ul>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-top"><span class="svc-label">LAYANAN 04</span><span class="svc-badge">Sesuai Kebutuhan</span></div>
+      <div class="svc-icon">🧠</div>
+      <div class="svc-title">AI &amp; Automation</div>
+      <div class="svc-desc">Integrasi AI ke alur kerja — tools cerdas dan otomatisasi pakai Claude API, GPT, atau Gemini.</div>
+      <ul class="svc-list"><li><span class="tickmini">✓</span>Python, Streamlit</li><li><span class="tickmini">✓</span>Chatbot &amp; workflow</li></ul>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-top"><span class="svc-label">LAYANAN 05</span><span class="svc-badge">Sesuai Kebutuhan</span></div>
+      <div class="svc-icon">🎨</div>
+      <div class="svc-title">Brand &amp; Logo Design</div>
+      <div class="svc-desc">Identitas merek — logo, kemasan, sistem visual, dan materi pemasaran.</div>
+      <ul class="svc-list"><li><span class="tickmini">✓</span>5+ tahun pengalaman desain</li><li><span class="tickmini">✓</span>Figma, Canva</li></ul>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-top"><span class="svc-label">LAYANAN 06</span><span class="svc-badge">Sesuai Kebutuhan</span></div>
+      <div class="svc-icon">✉️</div>
+      <div class="svc-title">Email Marketing</div>
+      <div class="svc-desc">Strategi, copywriting, dan otomatisasi kampanye email untuk menjaga relasi dengan pelanggan.</div>
+      <ul class="svc-list"><li><span class="tickmini">✓</span>MailerLite</li><li><span class="tickmini">✓</span>Automation flow</li></ul>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-top"><span class="svc-label">LAYANAN 07</span><span class="svc-badge">Sesuai Kebutuhan</span></div>
+      <div class="svc-icon">🎙️</div>
+      <div class="svc-title">Voice Over</div>
+      <div class="svc-desc">Pengisi suara untuk video promosi, iklan, e-learning, hingga konten AI voice yang natural.</div>
+      <ul class="svc-list"><li><span class="tickmini">✓</span>Bahasa Indonesia &amp; Inggris</li><li><span class="tickmini">✓</span>Naskah &amp; editing audio</li></ul>
+    </div>
+
+  </div>
+</section>
+
+<section class="process wrap" id="proses">
+  <div class="section-head">
+    <span class="eyebrow" style="background:var(--orange)">🔧 Cara Kerja</span>
+    <h2 class="display">Prosesnya Sederhana</h2>
+  </div>
+  <div class="process-strip">
+    <div class="proc-step"><div class="proc-num">01</div><div class="proc-title">Konsultasi</div><div class="proc-desc">Diskusi kebutuhan &amp; tujuan bisnis, gratis di awal.</div></div>
+    <div class="proc-step"><div class="proc-num">02</div><div class="proc-title">Desain &amp; Build</div><div class="proc-desc">Rencana kerja disepakati, sistem mulai dibangun.</div></div>
+    <div class="proc-step"><div class="proc-num">03</div><div class="proc-title">Testing &amp; Revisi</div><div class="proc-desc">Pengujian fungsi &amp; penyesuaian sesuai masukan.</div></div>
+    <div class="proc-step"><div class="proc-num">04</div><div class="proc-title">Deploy &amp; Support</div><div class="proc-desc">Online dan didampingi setelah peluncuran.</div></div>
+  </div>
+</section>
+
+<section class="faq wrap" id="faq">
+  <div class="section-head">
+    <span class="eyebrow" style="background:var(--teal)">❓ FAQ</span>
+    <h2 class="display">Pertanyaan Umum</h2>
+  </div>
+  <div class="faq-list">
+    <details open>
+      <summary>Berapa lama waktu pengerjaan proyek?</summary>
+      <p>Tergantung kompleksitas. Landing page sederhana bisa selesai dalam beberapa hari, sementara sistem atau SaaS custom biasanya beberapa minggu. Estimasi pasti diberikan setelah sesi konsultasi.</p>
+    </details>
+    <details>
+      <summary>Apakah bisa mengerjakan proyek untuk instansi pemerintah?</summary>
+      <p>Bisa. Bicara Digital terbuka bekerja sama dengan instansi pemerintah untuk sistem administrasi, dashboard pelaporan, hingga digitalisasi layanan publik.</p>
+    </details>
+    <details>
+      <summary>Bagaimana skema harganya?</summary>
+      <p>Harga bersifat project-based (sesuai penawaran), karena kebutuhan tiap klien berbeda. Setelah ruang lingkup disepakati, akan dikirimkan rincian penawaran resmi.</p>
+    </details>
+    <details>
+      <summary>Apakah ada dukungan setelah proyek selesai?</summary>
+      <p>Ada. Setiap sistem yang dibangun disertai dokumentasi penggunaan dan pendampingan pasca-peluncuran sesuai kesepakatan.</p>
+    </details>
+  </div>
+</section>
+
+<section class="final-cta wrap">
+  <div class="cta-banner">
+    <h2 class="display">Siap Mulai Proyekmu?</h2>
+    <p>Konsultasi &amp; estimasi awal gratis — chat langsung dengan yang mengerjakan.</p>
+    <a href="https://wa.me/6285329997986" class="btn btn-primary">Chat di WhatsApp →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <div class="foot-brand"><img src="assets/logo.png" alt="Bicara Digital"> bicaradigital</div>
+      <ul class="foot-links">
+        <li><a href="#layanan">Layanan</a></li>
+        <li><a href="#proses">Proses</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="https://wa.me/6285329997986">WhatsApp</a></li>
+      </ul>
+    </div>
+    <div class="foot-copy">© 2026 Bicara Digital · Semarang, Indonesia · Teknologi yang mudah dipakai</div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/6285329997986" aria-label="Chat WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.38c1.44.79 3.06 1.2 4.71 1.2h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.8 14.03c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.11.11-1.79-.11-.41-.13-.94-.3-1.62-.6-2.85-1.23-4.71-4.1-4.85-4.29-.14-.19-1.16-1.55-1.16-2.95s.73-2.09.99-2.38c.26-.28.56-.35.75-.35s.38 0 .55.01c.18.01.41-.07.64.49.24.58.81 2 .88 2.15.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.16-.29.36-.42.49-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.86-1.06.18-.28.36-.23.6-.14.24.09 1.53.72 1.79.85.26.14.44.2.5.31.06.12.06.68-.18 1.36z"/></svg>
+</a>
+
+</body>
+</html>
